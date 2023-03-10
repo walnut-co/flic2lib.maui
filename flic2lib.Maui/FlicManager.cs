@@ -1,23 +1,12 @@
 ﻿namespace flic2lib.Maui;
 
-public interface IFlicManager
+public static partial class FlicManager
 {
-    IEnumerable<FlicButton> Buttons { get; }
-}
-
-public partial class FlicManager : IFlicManager
-{
-    public FlicManager()
-    {
-    }
-
-    public IEnumerable<FlicButton> Buttons => null;
-    //public IEnumerable<FlicButton> Buttons => GetButtons();
+    public static IEnumerable<FlicButton>? Buttons => GetButtons();
 
     partial void Initialize();
-    //public partial IEnumerable<FlicButton> GetButtons()
-    //{
-    //    return Buttons;
-    //}
+
+    public static partial void ForgetButton(FlicButton button);
+    private static partial IEnumerable<FlicButton>? GetButtons();
 }
 
