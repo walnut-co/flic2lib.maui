@@ -1,12 +1,23 @@
-﻿using IO.Flic.Flic2libandroid;
+﻿namespace flic2lib.Maui;
 
-namespace flic2lib.Maui;
+public interface IFlicManager
+{
+    IEnumerable<FlicButton> Buttons { get; }
+}
 
-public partial class FlicManager
+public partial class FlicManager : IFlicManager
 {
     public FlicManager()
     {
     }
 
-    partial FlicManager Initialize();
+    public IEnumerable<FlicButton> Buttons => null;
+    //public IEnumerable<FlicButton> Buttons => GetButtons();
+
+    partial void Initialize();
+    //public partial IEnumerable<FlicButton> GetButtons()
+    //{
+    //    return Buttons;
+    //}
 }
+

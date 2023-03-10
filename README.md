@@ -1,4 +1,4 @@
-# flic2lib.sharp
+# flic2lib.Platforms
 
 Contains net6 android and ios bindings for flic2lib Android and iOS sdk.
 
