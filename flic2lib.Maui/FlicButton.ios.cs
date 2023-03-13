@@ -1,16 +1,15 @@
 ﻿using Flic2lib.iOS;
-using Foundation;
 
 namespace flic2lib.Maui;
 
-public partial class FlicButton : FLICButtonDelegate
+public partial class FlicButton
 {
     private readonly FLICButton _button;
 
     public FlicButton(FLICButton fLICButton)
     {
         _button = fLICButton;
-        _button.Delegate = this;
+        _button.Delegate = FlicButtonHandler.Instance;
     }
 
     public partial void Connect()
@@ -25,7 +24,7 @@ public partial class FlicButton : FLICButtonDelegate
 
     public partial void StartListen()
     {
-        _button.Delegate = this;
+        _button.Delegate = FlicButtonHandler.Instance;
     }
 
     public partial void StopListen()
@@ -47,64 +46,4 @@ public partial class FlicButton : FLICButtonDelegate
     private partial bool GetIsUnpaired() => _button.IsUnpaired;
     private partial string? GetIdentifier() => _button.Identifier.AsString();
     private partial FlicButtonConnectionState GetConnectionState() => (FlicButtonConnectionState)_button.State;
-
-    public override void ButtonDidConnect(FLICButton button)
-    {
-        Connected?.Invoke(this, EventArgs.Empty);
-    }
-
-    public override void ButtonIsReady(FLICButton button)
-    {
-        IsReadyChanged?.Invoke(this, DateTime.Now.Ticks);
-    }
-
-    public override void DidDisconnectWithError(FLICButton button, NSError? error)
-    {
-        Disconnected?.Invoke(this, EventArgs.Empty);
-    }
-
-    public override void DidFailToConnectWithError(FLICButton button, NSError? error)
-    {
-        Failure?.Invoke(this, (error != null ? (int)error.Code : 0, 0));
-    }
-
-    public override void DidReceiveButtonDown(FLICButton button, bool queued, nint age)
-    {
-        ButtonDown?.Invoke(this, new FlicButtonEvent(age, queued, ClickActions.Down));
-    }
-
-    public override void DidReceiveButtonUp(FLICButton button, bool queued, nint age)
-    {
-        ButtonUp?.Invoke(this, new FlicButtonEvent(age, queued, ClickActions.Up));
-    }
-
-    public override void DidReceiveButtonClick(FLICButton button, bool queued, nint age)
-    {
-        ButtonClick?.Invoke(this, new FlicButtonEvent(age, queued, ClickActions.SingleClick));
-    }
-
-    public override void DidReceiveButtonDoubleClick(FLICButton button, bool queued, nint age)
-    {
-        ButtonDoubleClick?.Invoke(this, new FlicButtonEvent(age, queued, ClickActions.DoubleClick));
-    }
-
-    public override void DidReceiveButtonHold(FLICButton button, bool queued, nint age)
-    {
-        ButtonHold?.Invoke(this, new FlicButtonEvent(age, queued, ClickActions.Hold));
-    }
-
-    public override void DidUnpairWithError(FLICButton button, NSError? error)
-    {
-        Unparied?.Invoke(this, EventArgs.Empty);
-    }
-
-    public override void DidUpdateBatteryVoltage(FLICButton button, float voltage)
-    {
-        BatteryLevelChanged?.Invoke(this, voltage);
-    }
-
-    public override void DidUpdateNickname(FLICButton button, string nickname)
-    {
-        NameChanged?.Invoke(this, nickname);
-    }
 }

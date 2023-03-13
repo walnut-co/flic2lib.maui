@@ -8,33 +8,8 @@ public enum FlicButtonConnectionState
     Disconnecting
 }
 
-public enum ClickActions
-{
-    None = 0,
-    Up,
-    Down,
-    Hold,
-    SingleClick,
-    DoubleClick
-}
-
-public record FlicButtonEvent(long Timestamp, bool Queued, ClickActions Actions);
-
 public partial class FlicButton
 {
-    public event EventHandler? Connected;
-    public event EventHandler? Disconnected;
-    public event EventHandler? Unparied;
-    public event EventHandler<(int errorCode, int subCode)>? Failure;
-    public event EventHandler<long>? IsReadyChanged;
-    public event EventHandler<string?>? NameChanged;
-    public event EventHandler<float?>? BatteryLevelChanged;
-    public event EventHandler<FlicButtonEvent>? ButtonUp;
-    public event EventHandler<FlicButtonEvent>? ButtonDown;
-    public event EventHandler<FlicButtonEvent>? ButtonClick;
-    public event EventHandler<FlicButtonEvent>? ButtonDoubleClick;
-    public event EventHandler<FlicButtonEvent>? ButtonHold;
-
     public string? BluetoothAddress => GetBluetoothAddress();
     public string? Name => GetName();
     public string? NickName { get => GetNickName(); set => SetNickName(value); }
@@ -47,6 +22,11 @@ public partial class FlicButton
     public bool IsUnpaired => GetIsUnpaired();
     public string? Identifier => GetIdentifier();
     public FlicButtonConnectionState ConnectionState => GetConnectionState();
+
+    public void Forget()
+    {
+        FlicManager.Instance.ForgetButton(this);
+    }
 
     /// <summary>
     /// Gets the underlying platform button impl
