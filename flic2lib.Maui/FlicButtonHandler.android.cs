@@ -31,10 +31,10 @@ public partial class FlicButtonHandler : Flic2ButtonListener
 
     public override void OnButtonSingleOrDoubleClick(Flic2Button? button, bool wasQueued, bool lastQueued, long timestamp, bool isSingleClick, bool isDoubleClick)
     {
-        if (isSingleClick)
-        {
-            ButtonClick?.Invoke(this, new FlicButtonClickEvent(GetFlicButton(button?.Uuid), timestamp, wasQueued));
-        }
+        //if (isSingleClick)
+        //{
+        //    ButtonClick?.Invoke(this, new FlicButtonClickEvent(GetFlicButton(button?.Uuid), timestamp, wasQueued));
+        //}
         if (isDoubleClick)
         {
             ButtonDoubleClick?.Invoke(this, new FlicButtonDoubleClickEvent(GetFlicButton(button?.Uuid), timestamp, wasQueued));

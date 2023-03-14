@@ -1,6 +1,6 @@
 ﻿namespace flic2lib.Maui;
 
-public partial class FlicButtonHandler
+public partial class FlicButtonHandler : IFlicButtonHandler
 {
     public event EventHandler<FlicButtonConnectedEvent>? Connected;
     public event EventHandler<FlicButtonDisconnectedEvent>? Disconnected;

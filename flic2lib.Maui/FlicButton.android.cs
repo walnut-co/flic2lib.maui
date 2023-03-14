@@ -2,7 +2,7 @@
 
 namespace flic2lib.Maui;
 
-public partial class FlicButton : Flic2ButtonListener
+public partial class FlicButton
 {
     private readonly Flic2Button _button;
 
