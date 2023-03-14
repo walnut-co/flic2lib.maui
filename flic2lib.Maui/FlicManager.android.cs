@@ -1,5 +1,6 @@
 ﻿using Flic2lib.Android;
 using Android.OS;
+using static Android.Provider.Telephony.Mms;
 
 namespace flic2lib.Maui;
 
@@ -76,19 +77,19 @@ public partial class FlicManager
         if (result == (int)FlicScanResult.SCAN_RESULT_SUCCESS)
         {
             if (button == null) return;
-            // Success!
-            // The button object can now be used
             if (_cachedButtons.FirstOrDefault(cb => cb.Uuid == button?.Uuid) is FlicButton { } cachedButton)
             {
                 _cachedButtons.Remove(cachedButton);
             }
-
-            _cachedButtons.Add(new FlicButton(button));
+            var btn = new FlicButton(button);
+            _cachedButtons.Add(btn);
+            ButtonDiscovered?.Invoke(this, new FlicScanButtonDiscoveredEvent(btn));
+            ScanEnded?.Invoke(this, new FlicScanEndedEvent((FlicScanResult)result));
         }
         else
         {
             // Failed
-            // oh no ¯\_(ツ)_ /¯
+            ScanFailed?.Invoke(this, new FlicScanFailedEvent((FlicScanResult)result));
         }
     }
 
@@ -112,14 +113,17 @@ public partial class FlicManager
 
         public void OnConnected()
         {
+            // ignored
         }
 
         public void OnDiscovered(string? bdAddr)
         {
+            // ignored
         }
 
         public void OnDiscoveredAlreadyPairedButton(Flic2Button? button)
         {
+            // ignored
         }
     }
 }

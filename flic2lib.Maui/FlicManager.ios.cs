@@ -35,14 +35,18 @@ public partial class FlicManager
     {
         if (error != null)
         {
-            // oh no ¯\_(ツ)_/¯
+            // TODO: test on ios
+            ScanFailed?.Invoke(this, new FlicScanFailedEvent((FlicScanResult)error.Code));
+            return;
         }
         if (_cachedButtons.FirstOrDefault(cb => cb.Uuid == button.Uuid) is FlicButton { } cachedButton)
         {
             _cachedButtons.Remove(cachedButton);
         }
-
-        _cachedButtons.Add(new FlicButton(button));
+        var btn = new FlicButton(button);
+        _cachedButtons.Add(btn);
+        ButtonDiscovered?.Invoke(this, new FlicScanButtonDiscoveredEvent(btn));
+        ScanEnded?.Invoke(this, new FlicScanEndedEvent(FlicScanResult.SCAN_RESULT_SUCCESS));
     }
 
     public partial void StopScan()
