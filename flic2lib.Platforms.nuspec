@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/Bang0123/flic2lib.sharp</projectUrl>
     <description>Flic2lib platform bindings for net6 ios and android</description>
     <releaseNotes>Changed android namespace</releaseNotes>
-    <readme>docs\README.md</readme>
+    <readme><docs/>platforms_readme.md</readme>
     <copyright>$copyright$</copyright>
     <tags>flic flic2 buttons platform bindings</tags>
     <dependencies>
@@ -23,7 +23,7 @@
   </metadata>
 
   <files>
-    <file src="README.md" target="docs\" />
+    <file src="docs/platforms_readme.md" target="docs/" />
     <!-- Android -->
     <file src="flic2lib.android/bin/Release/net6.0-android/flic2lib.android.dll" target="lib/net6.0-android21/" />
     <file src="flic2lib.android/bin/Release/net6.0-android/flic2lib.android.pdb" target="lib/net6.0-android21/" />
