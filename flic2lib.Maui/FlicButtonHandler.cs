@@ -2,6 +2,7 @@
 
 public partial class FlicButtonHandler : IFlicButtonHandler
 {
+    private readonly static Lazy<FlicButtonHandler> _lazyInstance = new(() => new FlicButtonHandler(), LazyThreadSafetyMode.ExecutionAndPublication);
     public event EventHandler<FlicButtonConnectedEvent>? Connected;
     public event EventHandler<FlicButtonDisconnectedEvent>? Disconnected;
     public event EventHandler<FlicButtonUnpairedEvent>? Unparied;
@@ -14,8 +15,7 @@ public partial class FlicButtonHandler : IFlicButtonHandler
     public event EventHandler<FlicButtonClickEvent>? ButtonClick;
     public event EventHandler<FlicButtonDoubleClickEvent>? ButtonDoubleClick;
     public event EventHandler<FlicButtonHoldEvent>? ButtonHold;
-
-    public static FlicButtonHandler Instance { get; } = new FlicButtonHandler();
+    internal static FlicButtonHandler Instance => _lazyInstance.Value;
     private FlicButtonHandler() { }
 
     private static FlicButton? GetFlicButton(string? uuid)

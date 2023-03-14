@@ -7,7 +7,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
-            .UseFlic2lib()
+            .UseFlic2lib(initManager: true)
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -17,8 +17,6 @@ public static class MauiProgram
         builder.Services
             .AddTransient<MainPage>()
             .AddTransient<Bluetooth>();
-
-        FlicManager.Init();
 
         return builder.Build();
     }

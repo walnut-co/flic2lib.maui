@@ -101,7 +101,8 @@ public partial class FlicManager
 
     public class ScanCallbacks : Java.Lang.Object, IFlic2ScanCallback
     {
-        public static ScanCallbacks Instance { get; } = new ScanCallbacks();
+        private readonly static Lazy<ScanCallbacks> _lazyInstance = new(() => new ScanCallbacks(), LazyThreadSafetyMode.ExecutionAndPublication);
+        internal static ScanCallbacks Instance => _lazyInstance.Value;
         private ScanCallbacks() { }
 
         public void OnComplete(int result, int subCode, Flic2Button? button)
