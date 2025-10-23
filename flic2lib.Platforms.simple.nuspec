@@ -39,8 +39,6 @@
             target="lib/net9.0-ios13.0/" />
         <file src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.pdb"
             target="lib/net9.0-ios13.0/" />
-        <file src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources.stamp"
-            target="lib/net9.0-ios13.0/" />
 
         <!-- xcframework essential files -->
         <file src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/manifest"
