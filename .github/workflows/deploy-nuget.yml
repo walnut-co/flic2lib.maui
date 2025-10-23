@@ -158,17 +158,45 @@ jobs:
       shell: pwsh
       run: |
         $version = "${{ steps.extract_version.outputs.VERSION }}"
+        Write-Host "Updating nuspec files to version: $version" -ForegroundColor Yellow
+        
+        # Validate version format
+        if ($version -notmatch '^\d+\.\d+\.\d+$') {
+          Write-Error "Invalid version format: $version. Expected format: X.Y.Z"
+          exit 1
+        }
         
         # Update flic2lib.Platforms.simple.nuspec
-        $platformsNuspec = Get-Content "flic2lib.Platforms.simple.nuspec" -Raw
+        Write-Host "Updating Platforms nuspec..." -ForegroundColor Cyan
+        $platformsNuspec = Get-Content "flic2lib.Platforms.simple.nuspec" -Raw -Encoding UTF8
         $platformsNuspec = $platformsNuspec -replace '<version>[\d\.]+</version>', "<version>$version</version>"
-        Set-Content "flic2lib.Platforms.simple.nuspec" -Value $platformsNuspec
+        Set-Content "flic2lib.Platforms.simple.nuspec" -Value $platformsNuspec -Encoding UTF8
         
         # Update flic2lib.Maui.nuspec
-        $mauiNuspec = Get-Content "flic2lib.Maui.nuspec" -Raw
+        Write-Host "Updating MAUI nuspec..." -ForegroundColor Cyan
+        $mauiNuspec = Get-Content "flic2lib.Maui.nuspec" -Raw -Encoding UTF8
         $mauiNuspec = $mauiNuspec -replace '<version>[\d\.]+</version>', "<version>$version</version>"
         $mauiNuspec = $mauiNuspec -replace 'version="[\d\.]+"', "version=`"$version`""
-        Set-Content "flic2lib.Maui.nuspec" -Value $mauiNuspec
+        Set-Content "flic2lib.Maui.nuspec" -Value $mauiNuspec -Encoding UTF8
+        
+        # Verify the changes
+        Write-Host "Verifying version updates..." -ForegroundColor Cyan
+        $platformsContent = Get-Content "flic2lib.Platforms.simple.nuspec" -Raw
+        $mauiContent = Get-Content "flic2lib.Maui.nuspec" -Raw
+        
+        if ($platformsContent -match "<version>$version</version>") {
+          Write-Host "✓ Platforms nuspec version updated successfully" -ForegroundColor Green
+        } else {
+          Write-Error "Failed to update Platforms nuspec version"
+          exit 1
+        }
+        
+        if ($mauiContent -match "<version>$version</version>") {
+          Write-Host "✓ MAUI nuspec version updated successfully" -ForegroundColor Green  
+        } else {
+          Write-Error "Failed to update MAUI nuspec version"
+          exit 1
+        }
 
     - name: Verify build outputs exist
       shell: pwsh
@@ -193,12 +221,26 @@ jobs:
       shell: pwsh
       run: |
         $version = "${{ steps.extract_version.outputs.VERSION }}"
-        nuget pack flic2lib.Platforms.simple.nuspec -Properties "copyright=Copyright 2025 Walnut"
+        Write-Host "Creating Platforms package with version: $version" -ForegroundColor Yellow
+        
+        # Show nuspec content for debugging
+        Write-Host "Platforms nuspec content:" -ForegroundColor Cyan
+        Get-Content "flic2lib.Platforms.simple.nuspec" | Select-Object -First 10
+        
+        # Create package with verbose output
+        Write-Host "Running nuget pack..." -ForegroundColor Cyan
+        nuget pack flic2lib.Platforms.simple.nuspec -Properties "copyright=Copyright 2025 Walnut" -Verbosity Detailed
+        if ($LASTEXITCODE -ne 0) {
+          Write-Error "nuget pack command failed with exit code: $LASTEXITCODE"
+          exit 1
+        }
         
         # Verify package was created
         $packageFile = "walnut.flic2lib.Platforms.$version.nupkg"
         if (-not (Test-Path $packageFile)) {
           Write-Error "Failed to create Platforms package: $packageFile"
+          Write-Host "Available files:" -ForegroundColor Yellow
+          Get-ChildItem -Filter "*.nupkg" | ForEach-Object { Write-Host "  $($_.Name)" }
           exit 1
         }
         Write-Host "✓ Created Platforms package: $packageFile" -ForegroundColor Green
@@ -207,12 +249,26 @@ jobs:
       shell: pwsh
       run: |
         $version = "${{ steps.extract_version.outputs.VERSION }}"
-        nuget pack flic2lib.Maui.nuspec
+        Write-Host "Creating MAUI package with version: $version" -ForegroundColor Yellow
+        
+        # Show nuspec content for debugging
+        Write-Host "MAUI nuspec content:" -ForegroundColor Cyan
+        Get-Content "flic2lib.Maui.nuspec" | Select-Object -First 10
+        
+        # Create package with verbose output
+        Write-Host "Running nuget pack..." -ForegroundColor Cyan
+        nuget pack flic2lib.Maui.nuspec -Verbosity Detailed
+        if ($LASTEXITCODE -ne 0) {
+          Write-Error "nuget pack command failed with exit code: $LASTEXITCODE"
+          exit 1
+        }
         
         # Verify package was created
         $packageFile = "walnut.flic2lib.Maui.$version.nupkg"
         if (-not (Test-Path $packageFile)) {
           Write-Error "Failed to create MAUI package: $packageFile"
+          Write-Host "Available files:" -ForegroundColor Yellow
+          Get-ChildItem -Filter "*.nupkg" | ForEach-Object { Write-Host "  $($_.Name)" }
           exit 1
         }
         Write-Host "✓ Created MAUI package: $packageFile" -ForegroundColor Green
