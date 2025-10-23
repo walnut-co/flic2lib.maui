@@ -3,20 +3,20 @@
   <metadata>
     <id>walnut.flic2lib.Platforms</id>
     <version>1.0.1</version>
-    <authors>Bang0123</authors>
+    <authors>walnut</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <!-- <icon>icon.png</icon> -->
-    <projectUrl>https://github.com/Bang0123/flic2lib.sharp</projectUrl>
+    <projectUrl>https://github.com/walnut-co/flic2lib.maui</projectUrl>
     <description>Flic2lib platform bindings for net6 ios and android</description>
     <releaseNotes>Changed android namespace</releaseNotes>
-    <readme><docs />platforms_readme.md</readme>
+    <readme>docs/platforms_readme.md</readme>
     <copyright>$copyright$</copyright>
     <tags>flic flic2 buttons platform bindings</tags>
     <dependencies>
-      <group targetFramework="net6.0-android21">
+      <group targetFramework="net9.0-android21">
       </group>
-      <group targetFramework="net6.0-ios14">
+      <group targetFramework="net9.0-ios14">
         <dependency id="System.Runtime.InteropServices.NFloat.Internal" version="6.0.1"
           exclude="Build,Analyzers" />
       </group>
@@ -26,73 +26,73 @@
   <files>
     <file src="docs/platforms_readme.md" target="docs/" />
     <!-- Android -->
-    <file src="flic2lib.android/bin/Release/net6.0-android/flic2lib.android.dll"
-      target="lib/net6.0-android21/" />
-    <file src="flic2lib.android/bin/Release/net6.0-android/flic2lib.android.pdb"
-      target="lib/net6.0-android21/" />
-    <file src="flic2lib.android/bin/Release/net6.0-android/flic2lib.android.xml"
-      target="lib/net6.0-android21/" />
-    <file src="flic2lib.android/bin/Release/net6.0-android/flic2lib-android-debug.aar"
-      target="lib/net6.0-android21/" />
+    <file src="flic2lib.android/bin/Release/net9.0-android/flic2lib.android.dll"
+      target="lib/net9.0-android21/" />
+    <file src="flic2lib.android/bin/Release/net9.0-android/flic2lib.android.pdb"
+      target="lib/net9.0-android21/" />
+    <file src="flic2lib.android/bin/Release/net9.0-android/flic2lib.android.xml"
+      target="lib/net9.0-android21/" />
+    <file src="flic2lib.android/bin/Release/net9.0-android/fliclib-release.aar"
+      target="lib/net9.0-android21/" />
 
     <!-- ios -->
-    <file src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.dll" target="lib/net6.0-ios14/" />
-    <file src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.pdb" target="lib/net6.0-ios14/" />
-    <file src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources.stamp"
-      target="lib/net6.0-ios14/" />
+    <file src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.dll" target="lib/net9.0-ios14/" />
+    <file src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.pdb" target="lib/net9.0-ios14/" />
+    <file src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources.stamp"
+      target="lib/net9.0-ios14/" />
 
     <!-- xcframework stuff below -->
-    <file src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/manifest"
-      target="lib/net6.0-ios14/flic2lib.ios.resources" />
+    <file src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/manifest"
+      target="lib/net9.0-ios14/flic2lib.ios.resources" />
     <file
-      src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/flic2lib.xcframework/Info.plist"
-      target="lib/net6.0-ios14/flic2lib.ios.resources/flic2lib.xcframework" />
+      src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/flic2lib.xcframework/Info.plist"
+      target="lib/net9.0-ios14/flic2lib.ios.resources/flic2lib.xcframework" />
 
     <!-- live -->
     <file
-      src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Info.plist"
-      target="lib/net6.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework" />
+      src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Info.plist"
+      target="lib/net9.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework" />
     <file
-      src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/flic2lib"
-      target="lib/net6.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework" />
+      src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/flic2lib"
+      target="lib/net9.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework" />
     <file
-      src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers/flic2lib.h"
-      target="lib/net6.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers" />
+      src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers/flic2lib.h"
+      target="lib/net9.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers" />
     <file
-      src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers/FLICButton.h"
-      target="lib/net6.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers" />
+      src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers/FLICButton.h"
+      target="lib/net9.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers" />
     <file
-      src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers/FLICEnums.h"
-      target="lib/net6.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers" />
+      src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers/FLICEnums.h"
+      target="lib/net9.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers" />
     <file
-      src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers/FLICManager.h"
-      target="lib/net6.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers" />
+      src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers/FLICManager.h"
+      target="lib/net9.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Headers" />
     <file
-      src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Modules/module.modulemap"
-      target="lib/net6.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Modules" />
+      src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Modules/module.modulemap"
+      target="lib/net9.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_armv7/flic2lib.framework/Modules" />
 
     <!-- simulator -->
     <file
-      src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Info.plist"
-      target="lib/net6.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework" />
+      src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Info.plist"
+      target="lib/net9.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework" />
     <file
-      src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/flic2lib"
-      target="lib/net6.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework" />
+      src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/flic2lib"
+      target="lib/net9.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework" />
     <file
-      src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers/flic2lib.h"
-      target="lib/net6.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers" />
+      src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers/flic2lib.h"
+      target="lib/net9.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers" />
     <file
-      src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers/FLICButton.h"
-      target="lib/net6.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers" />
+      src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers/FLICButton.h"
+      target="lib/net9.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers" />
     <file
-      src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers/FLICEnums.h"
-      target="lib/net6.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers" />
+      src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers/FLICEnums.h"
+      target="lib/net9.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers" />
     <file
-      src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers/FLICManager.h"
-      target="lib/net6.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers" />
+      src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers/FLICManager.h"
+      target="lib/net9.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Headers" />
     <file
-      src="flic2lib.ios/bin/Release/net6.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Modules/module.modulemap"
-      target="lib/net6.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Modules" />
+      src="flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Modules/module.modulemap"
+      target="lib/net9.0-ios14/flic2lib.ios.resources/flic2lib.xcframework/ios-arm64_x86_64-simulator/flic2lib.framework/Modules" />
 
   </files>
 </package>
