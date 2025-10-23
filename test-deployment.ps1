@@ -50,16 +50,21 @@ try {
     
     # Update flic2lib.Platforms.simple.nuspec
     $platformsNuspec = Get-Content "flic2lib.Platforms.simple.nuspec" -Raw
-    $originalPlatformsVersion = [regex]::Match($platformsNuspec, '<version>([\d\.]+)</version>').Groups[1].Value
-    $platformsNuspec = $platformsNuspec -replace '<version>[\d\.]+</version>', "<version>$Version</version>"
+    $originalPlatformsVersion = [regex]::Match($platformsNuspec, '(?<=<metadata>[\s\S]*?)<version>([\d\.]+)</version>').Groups[1].Value
+    $platformsNuspec = $platformsNuspec -replace '(?<=<metadata>[\s\S]*?)<version>[\d\.]+</version>', "<version>$Version</version>"
     Set-Content "flic2lib.Platforms.simple.nuspec" -Value $platformsNuspec
     Write-Success "Updated Platforms nuspec: $originalPlatformsVersion → $Version"
     
-    # Update flic2lib.Maui.nuspec
+    # Update flic2lib.Maui.nuspec with more specific patterns
     $mauiNuspec = Get-Content "flic2lib.Maui.nuspec" -Raw
-    $originalMauiVersion = [regex]::Match($mauiNuspec, '<version>([\d\.]+)</version>').Groups[1].Value
-    $mauiNuspec = $mauiNuspec -replace '<version>[\d\.]+</version>', "<version>$Version</version>"
-    $mauiNuspec = $mauiNuspec -replace 'version="[\d\.]+"', "version=`"$Version`""
+    $originalMauiVersion = [regex]::Match($mauiNuspec, '(?<=<metadata>[\s\S]*?)<version>([\d\.]+)</version>').Groups[1].Value
+    
+    # Replace package version (in metadata section only)
+    $mauiNuspec = $mauiNuspec -replace '(?<=<metadata>[\s\S]*?)<version>[\d\.]+</version>', "<version>$Version</version>"
+    
+    # Replace dependency versions
+    $mauiNuspec = $mauiNuspec -replace '(?<=<dependency[^>]*version=")[^"]*(?=")', $Version
+    
     Set-Content "flic2lib.Maui.nuspec" -Value $mauiNuspec
     Write-Success "Updated MAUI nuspec: $originalMauiVersion → $Version"
 
@@ -181,15 +186,15 @@ try {
     
     if ($originalPlatformsVersion) {
         $platformsNuspec = Get-Content "flic2lib.Platforms.simple.nuspec" -Raw
-        $platformsNuspec = $platformsNuspec -replace '<version>[\d\.]+</version>', "<version>$originalPlatformsVersion</version>"
+        $platformsNuspec = $platformsNuspec -replace '(?<=<metadata>[\s\S]*?)<version>[\d\.]+</version>', "<version>$originalPlatformsVersion</version>"
         Set-Content "flic2lib.Platforms.simple.nuspec" -Value $platformsNuspec
         Write-Info "Restored Platforms nuspec to version $originalPlatformsVersion"
     }
     
     if ($originalMauiVersion) {
         $mauiNuspec = Get-Content "flic2lib.Maui.nuspec" -Raw
-        $mauiNuspec = $mauiNuspec -replace '<version>[\d\.]+</version>', "<version>$originalMauiVersion</version>"
-        $mauiNuspec = $mauiNuspec -replace 'version="[\d\.]+"', "version=`"$originalMauiVersion`""
+        $mauiNuspec = $mauiNuspec -replace '(?<=<metadata>[\s\S]*?)<version>[\d\.]+</version>', "<version>$originalMauiVersion</version>"
+        $mauiNuspec = $mauiNuspec -replace '(?<=<dependency[^>]*version=")[^"]*(?=")', $originalMauiVersion
         Set-Content "flic2lib.Maui.nuspec" -Value $mauiNuspec
         Write-Info "Restored MAUI nuspec to version $originalMauiVersion"
     }

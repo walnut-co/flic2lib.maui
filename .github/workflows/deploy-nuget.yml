@@ -172,11 +172,16 @@ jobs:
         $platformsNuspec = $platformsNuspec -replace '<version>[\d\.]+</version>', "<version>$version</version>"
         Set-Content "flic2lib.Platforms.simple.nuspec" -Value $platformsNuspec -Encoding UTF8
         
-        # Update flic2lib.Maui.nuspec
+        # Update flic2lib.Maui.nuspec with more specific patterns
         Write-Host "Updating MAUI nuspec..." -ForegroundColor Cyan
         $mauiNuspec = Get-Content "flic2lib.Maui.nuspec" -Raw -Encoding UTF8
-        $mauiNuspec = $mauiNuspec -replace '<version>[\d\.]+</version>', "<version>$version</version>"
-        $mauiNuspec = $mauiNuspec -replace 'version="[\d\.]+"', "version=`"$version`""
+        
+        # Replace package version (in metadata section)
+        $mauiNuspec = $mauiNuspec -replace '(?<=<metadata>[\s\S]*?)<version>[\d\.]+</version>', "<version>$version</version>"
+        
+        # Replace dependency versions
+        $mauiNuspec = $mauiNuspec -replace '(?<=<dependency[^>]*version=")[^"]*(?=")', $version
+        
         Set-Content "flic2lib.Maui.nuspec" -Value $mauiNuspec -Encoding UTF8
         
         # Verify the changes
@@ -191,10 +196,12 @@ jobs:
           exit 1
         }
         
-        if ($mauiContent -match "<version>$version</version>") {
+        if ($mauiContent -match "<version>$version</version>" -and $mauiContent -notmatch "<?xml version=`"$version`"") {
           Write-Host "✓ MAUI nuspec version updated successfully" -ForegroundColor Green  
         } else {
-          Write-Error "Failed to update MAUI nuspec version"
+          Write-Error "Failed to update MAUI nuspec version or XML declaration was corrupted"
+          Write-Host "MAUI nuspec first line:" -ForegroundColor Yellow
+          ($mauiContent -split "`n")[0]
           exit 1
         }
 
