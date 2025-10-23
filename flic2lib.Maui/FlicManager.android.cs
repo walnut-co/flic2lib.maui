@@ -1,6 +1,6 @@
-﻿using Android.OS;
-using Flic2lib.Android;
-using flic2lib.android;
+﻿using Flic2lib.Android;
+using Android.OS;
+using static Android.Provider.Telephony.Mms;
 
 namespace flic2lib.Maui;
 
@@ -9,9 +9,7 @@ public partial class FlicManager
     public static partial void Init()
     {
         if (IsInitialized) return;
-
-        // TODO: Implement proper initialization using GetInstance with callbacks
-        // FlicManager.GetInstance(Platform.AppContext, new InitializedCallback());
+        Flic2Manager.Init(Platform.AppContext, new Handler(Looper.MainLooper!));
         IsInitialized = true;
     }
 
@@ -21,12 +19,10 @@ public partial class FlicManager
 
         if (_cachedButtons.Any())
         {
-            // TODO: Update to use proper FlicManager instance from GetInstance callback
-            // var allButtons = FlicManager.Instance?.Buttons?.ToList() ?? Enumerable.Empty<FlicButton>();
-            var allButtons = Enumerable.Empty<Flic2lib.Android.FlicButton>();
-            foreach (var btn in allButtons)
+            var allButtons = Flic2Manager.Instance?.Buttons?.ToList() ?? Enumerable.Empty<Flic2Button>();
+            foreach(var btn in allButtons)
             {
-                if (_cachedButtons.FirstOrDefault(cb => cb.Uuid == btn.ButtonId) == null)
+                if (_cachedButtons.FirstOrDefault(cb => cb.Uuid == btn.Uuid) == null)
                 {
                     _cachedButtons.Add(new FlicButton(btn));
                 }
@@ -35,10 +31,8 @@ public partial class FlicManager
 
         if (!_cachedButtons.Any())
         {
-            // TODO: Update to use proper FlicManager instance from GetInstance callback
-            // var btns = FlicManager.Instance?.Buttons?.Select(btn => new flic2lib.Maui.FlicButton(btn))?.ToList() ?? Enumerable.Empty<flic2lib.Maui.FlicButton>();
-            var btns = Enumerable.Empty<flic2lib.Maui.FlicButton>();
-            foreach (var btn in btns)
+            var btns = Flic2Manager.Instance?.Buttons?.Select(btn => new FlicButton(btn))?.ToList() ?? Enumerable.Empty<FlicButton>();
+            foreach(var btn in btns)
             {
                 _cachedButtons.Add(btn);
             }
@@ -54,9 +48,7 @@ public partial class FlicManager
         var btn = _cachedButtons?.FirstOrDefault(b => b.Uuid == uuid);
         if (btn == null)
         {
-            // TODO: Update to use proper FlicManager instance from GetInstance callback
-            // btn = FlicManager.Instance?.Buttons?.FirstOrDefault(b => b.Uuid == uuid) is Flic2lib.Android.FlicButton flicButton ? new flic2lib.Maui.FlicButton(flicButton) : null;
-            btn = null;
+            btn = Flic2Manager.Instance?.Buttons?.FirstOrDefault(b => b.Uuid == uuid) is Flic2Button flic2Button ? new FlicButton(flic2Button) : null;
             if (btn != null)
             {
                 _cachedButtons?.Add(btn);
@@ -70,28 +62,26 @@ public partial class FlicManager
         if (!IsInitialized) return;
 
         _cachedButtons.Remove(button);
-        // TODO: Update to use proper FlicManager instance from GetInstance callback
-        // FlicManager.Instance?.ForgetButton((Flic2lib.Android.FlicButton)button.GetInternalButton());
+        Flic2Manager.Instance?.ForgetButton((Flic2Button)button.GetInternalButton());
     }
 
     public partial void StartScan()
     {
         if (!IsInitialized) return;
 
-        // TODO: Update to use current Flic library scanning approach
-        // FlicManager.Instance?.StartScan(ScanCallbacks.Instance);
+        Flic2Manager.Instance?.StartScan(ScanCallbacks.Instance);
     }
 
-    internal void OnScanComplete(int result, int subCode, Flic2lib.Android.FlicButton? button)
+    internal void OnScanComplete(int result, int subCode, Flic2Button? button)
     {
         if (result == (int)FlicScanResult.SCAN_RESULT_SUCCESS)
         {
             if (button == null) return;
-            if (_cachedButtons.FirstOrDefault(cb => cb.Uuid == button?.ButtonId) is FlicButton { } cachedButton)
+            if (_cachedButtons.FirstOrDefault(cb => cb.Uuid == button?.Uuid) is FlicButton { } cachedButton)
             {
                 _cachedButtons.Remove(cachedButton);
             }
-            var btn = new flic2lib.Maui.FlicButton(button);
+            var btn = new FlicButton(button);
             _cachedButtons.Add(btn);
             ButtonDiscovered?.Invoke(this, new FlicScanButtonDiscoveredEvent(btn));
             ScanEnded?.Invoke(this, new FlicScanEndedEvent((FlicScanResult)result));
@@ -107,20 +97,18 @@ public partial class FlicManager
     {
         if (!IsInitialized) return;
 
-        // TODO: Update to use current Flic library scanning approach
-        // FlicManager.Instance?.StopScan();
+        Flic2Manager.Instance?.StopScan();
     }
 
-    public class ScanCallbacks : Java.Lang.Object // TODO: implement proper interface
+    public class ScanCallbacks : Java.Lang.Object, IFlic2ScanCallback
     {
         private readonly static Lazy<ScanCallbacks> _lazyInstance = new(() => new ScanCallbacks(), LazyThreadSafetyMode.ExecutionAndPublication);
         internal static ScanCallbacks Instance => _lazyInstance.Value;
         private ScanCallbacks() { }
 
-        public void OnComplete(int result, int subCode, Flic2lib.Android.FlicButton? button)
+        public void OnComplete(int result, int subCode, Flic2Button? button)
         {
-            // TODO: Update for new Flic library
-            // FlicManager.Instance.OnScanComplete(result, subCode, button);
+            FlicManager.Instance.OnScanComplete(result, subCode, button);
         }
 
         public void OnConnected()
@@ -133,7 +121,7 @@ public partial class FlicManager
             // ignored
         }
 
-        public void OnDiscoveredAlreadyPairedButton(Flic2lib.Android.FlicButton? button)
+        public void OnDiscoveredAlreadyPairedButton(Flic2Button? button)
         {
             // ignored
         }

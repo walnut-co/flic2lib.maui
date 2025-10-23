@@ -23,9 +23,6 @@ namespace flic2lib.Maui.Sample
         {
             var result = base.FinishedLaunching(application, launchOptions);
 
-            // Keep Flic2 buttons connected when app is in background
-            Configure.KeepFlicButtonsConnected();
-
             // Initialize FlicEventHandler for background events
             InitializeFlicEventHandler();
 
@@ -49,10 +46,6 @@ namespace flic2lib.Maui.Sample
         public override void WillEnterForeground(UIApplication application)
         {
             base.WillEnterForeground(application);
-
-            // Re-initialize connections when returning to foreground
-            Configure.KeepFlicButtonsConnected();
-            EnsureFlicEventHandlerActive();
 
             System.Diagnostics.Debug.WriteLine("iOS: App entering foreground - Flic connectivity refreshed");
         }
@@ -167,8 +160,6 @@ namespace flic2lib.Maui.Sample
 
             try
             {
-                // Refresh Flic connections during background fetch
-                Configure.KeepFlicButtonsConnected();
                 EnsureFlicEventHandlerActive();
 
                 // Give iOS feedback that we successfully refreshed
