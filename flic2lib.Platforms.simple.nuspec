@@ -31,7 +31,7 @@
             target="lib/net9.0-android29.0/" />
         <file src="flic2lib.android/bin/Release/net9.0-android/flic2lib.android.xml"
             target="lib/net9.0-android29.0/" />
-        <file src="flic2lib.android/bin/Release/net9.0-android/fliclib-release.aar"
+        <file src="flic2lib.android/bin/Release/net9.0-android/flic2lib-android-debug.aar"
             target="lib/net9.0-android29.0/" />
 
         <!-- ios -->

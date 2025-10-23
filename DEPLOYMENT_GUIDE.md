@@ -11,7 +11,7 @@ Your NuGet packages have been successfully generated and verified:
 ## 📋 Package Contents Verified
 
 ### Platforms Package (1.0.4)
-- Android bindings and native library (fliclib-release.aar)
+- Android bindings and native library (flic2lib-android-debug.aar)
 - iOS bindings with complete XCFramework support
 - Support for iOS device, simulator, and Mac Catalyst
 - .NET 9 compatibility

@@ -8,7 +8,7 @@
 - **Description**: Platform bindings for .NET 9 iOS and Android
 - **Contents**:
   - Android bindings (flic2lib.android.dll, .pdb, .xml)
-  - Android native library (fliclib-release.aar)
+  - Android native library (flic2lib-android-debug.aar)
   - iOS bindings (flic2lib.ios.dll, .pdb)
   - iOS XCFramework with support for:
     - ios-arm64 (device)
