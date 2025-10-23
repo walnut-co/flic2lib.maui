@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<package >
+<package>
   <metadata>
-    <id>flic2lib.Maui</id>
+    <id>walnut.flic2lib.Maui</id>
     <version>1.0.1</version>
     <authors>Bang0123</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -15,10 +15,10 @@
     <tags>flic flic2 buttons platform bindings maui</tags>
     <dependencies>
       <group targetFramework="net6.0-android21">
-		    <dependency id="flic2lib.Platforms" version="1.0.1" />
+        <dependency id="walnut.flic2lib.Platforms" version="1.0.1" />
       </group>
       <group targetFramework="net6.0-ios14">
-		    <dependency id="flic2lib.Platforms" version="1.0.1" />
+        <dependency id="walnut.flic2lib.Platforms" version="1.0.1" />
       </group>
     </dependencies>
   </metadata>
@@ -26,9 +26,12 @@
   <files>
     <file src="docs/maui_readme.md" target="docs/" />
     <!-- Android -->
-    <file src="flic2lib.Maui/bin/Release/net6.0-android/flic2lib.Maui.dll" target="lib/net6.0-android21/" />
-    <file src="flic2lib.Maui/bin/Release/net6.0-android/flic2lib.Maui.pdb" target="lib/net6.0-android21/" />
-    <file src="flic2lib.Maui/bin/Release/net6.0-android/flic2lib.Maui.xml" target="lib/net6.0-android21/" />
+    <file src="flic2lib.Maui/bin/Release/net6.0-android/flic2lib.Maui.dll"
+      target="lib/net6.0-android21/" />
+    <file src="flic2lib.Maui/bin/Release/net6.0-android/flic2lib.Maui.pdb"
+      target="lib/net6.0-android21/" />
+    <file src="flic2lib.Maui/bin/Release/net6.0-android/flic2lib.Maui.xml"
+      target="lib/net6.0-android21/" />
 
     <!-- ios -->
     <file src="flic2lib.Maui/bin/Release/net6.0-ios/flic2lib.Maui.dll" target="lib/net6.0-ios14/" />
