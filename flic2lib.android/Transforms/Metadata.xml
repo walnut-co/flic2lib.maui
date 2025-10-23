@@ -1,3 +1,12 @@
 ﻿<metadata>
-   <attr path="/api/package[@name='io.flic.flic2libandroid']" name="managedName">Flic2lib.Android</attr>
+   <!-- Transform the main package name to a more .NET-friendly namespace -->
+   <attr path="/api/package[@name='io.flic.lib']" name="managedName">Flic2lib.Android</attr>
+
+   <!-- Remove any deprecated or problematic methods/classes if needed -->
+   <!-- <remove-node path="/api/package[@name='io.flic.lib']/class[@name='DeprecatedClass']" /> -->
+
+   <!-- Fix any parameter naming issues -->
+   <!-- <attr
+   path="/api/package[@name='io.flic.lib']/class[@name='FlicButton']/method[@name='setCallback']/parameter[@name='callback']"
+   name="managedName">buttonCallback</attr> -->
 </metadata>

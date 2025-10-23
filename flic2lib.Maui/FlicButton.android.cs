@@ -4,46 +4,50 @@ namespace flic2lib.Maui;
 
 public partial class FlicButton
 {
-    private readonly Flic2Button _button;
+    private readonly Flic2lib.Android.FlicButton _button;
 
-    public FlicButton(Flic2Button flic2Button)
+    public FlicButton(Flic2lib.Android.FlicButton flicButton)
     {
-        _button = flic2Button;
-        _button.AddListener(FlicButtonHandler.Instance);
+        _button = flicButton;
+        FlicButtonHandler.Instance.InitializeAndroid();
+        _button.AddFlicButtonCallback(FlicButtonHandler.Instance.GetAndroidCallback());
     }
 
     public partial void Connect()
     {
-        _button.Connect();
+        // TODO: Check if there's a Connect method in the new API
+        // _button.Connect();
     }
 
     public partial void Disconnect()
     {
-        _button.DisconnectOrAbortPendingConnection();
+        // TODO: Check if there's a Disconnect method in the new API
+        // _button.DisconnectOrAbortPendingConnection();
     }
 
     public partial void StartListen()
     {
-        _button.AddListener(FlicButtonHandler.Instance);
+        FlicButtonHandler.Instance.InitializeAndroid();
+        _button.AddFlicButtonCallback(FlicButtonHandler.Instance.GetAndroidCallback());
     }
 
     public partial void StopListen()
     {
-        _button.RemoveListener(FlicButtonHandler.Instance);
+        _button.RemoveAllFlicButtonCallbacks();
     }
 
     public partial object GetInternalButton() => _button;
-    private partial string? GetBluetoothAddress() => _button.BdAddr;
+    private partial string? GetBluetoothAddress() => _button.ButtonId;
     private partial string? GetName() => _button.Name;
     private partial string? GetNickName() => _button.Name;
-    private partial void SetNickName(string? value) => _button.Name = value;
-    private partial string? GetSerialNumber() => _button.SerialNumber;
-    private partial string? GetUuid() => _button.Uuid;
-    private partial int GetFirmwareVersion() => _button.FirmwareVersion;
-    private partial int GetPressCount() => _button.PressCount;
-    private partial float? GetBatteryVoltage() => _button.LastKnownBatteryLevel?.Voltage;
-    private partial bool GetIsReady() => _button.ReadyTimestamp > 0;
-    private partial bool GetIsUnpaired() => _button.IsUnpaired;
-    private partial string? GetIdentifier() => _button.SerialNumber;
-    private partial FlicButtonConnectionState GetConnectionState() => (FlicButtonConnectionState)_button.ConnectionState;
+    private partial void SetNickName(string? value) { /* TODO: Check if Name can be set */ }
+    private partial string? GetSerialNumber() => _button.ButtonId; // Using ButtonId as equivalent
+    private partial string? GetUuid() => _button.ButtonId; // Using ButtonId as equivalent
+    private partial int GetFirmwareVersion() => 0; // TODO: Check if available in new API
+    private partial int GetPressCount() => 0; // TODO: Check if available in new API
+    private partial float? GetBatteryVoltage() => null; // TODO: Check if available in new API
+    private partial bool GetIsReady() => _button.ConnectionStatus == 2; // Assuming 2 means ready
+    private partial bool GetIsUnpaired() => _button.ConnectionStatus == 0; // Assuming 0 means unpaired
+    private partial string? GetIdentifier() => _button.ButtonId;
+    private partial FlicButtonConnectionState GetConnectionState() => (FlicButtonConnectionState)_button.ConnectionStatus;
 }
