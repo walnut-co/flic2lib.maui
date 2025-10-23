@@ -2,6 +2,8 @@ name: Deploy to NuGet
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*.*.*'  # Triggers on version tags like v1.0.6
   workflow_dispatch:  # Allow manual trigger
@@ -9,7 +11,7 @@ on:
       version:
         description: 'Version to deploy (e.g., 1.0.6)'
         required: true
-        default: '1.0.6'
+        default: '1.0.7'
 
 env:
   DOTNET_VERSION: '9.0.x'
