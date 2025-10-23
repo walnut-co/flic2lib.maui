@@ -2,23 +2,28 @@
 <package>
   <metadata>
     <id>walnut.flic2lib.Maui</id>
-    <version>1.0.1</version>
+    <version>1.0.6</version>
     <authors>walnut</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <!-- <icon>icon.png</icon> -->
     <projectUrl>https://github.com/walnut-co/flic2lib.maui</projectUrl>
-    <description>Flic2lib For usage in MAUI</description>
-    <releaseNotes>Maui crossplatform layer</releaseNotes>
+    <description>Flic2lib For usage in MAUI with comprehensive background event handling</description>
+    <releaseNotes>Version 1.0.6: Updated minimum platform versions - Android API 29 (Android 10),
+      iOS 13.0.
+      Enhanced iOS AppDelegate with reliable service provider access, improved background task
+      management,
+      optimized Android metadata transformations. Better compatibility with modern platform
+      requirements.</releaseNotes>
     <readme>docs/maui_readme.md</readme>
-    <copyright>$copyright$</copyright>
-    <tags>flic flic2 buttons platform bindings maui</tags>
+    <copyright>Copyright 2025 Walnut</copyright>
+    <tags>flic flic2 buttons platform bindings maui background emergency</tags>
     <dependencies>
-      <group targetFramework="net9.0-android21">
-        <dependency id="walnut.flic2lib.Platforms" version="1.0.1" />
+      <group targetFramework="net9.0-android29.0">
+        <dependency id="walnut.flic2lib.Platforms" version="1.0.6" />
       </group>
-      <group targetFramework="net9.0-ios14">
-        <dependency id="walnut.flic2lib.Platforms" version="1.0.1" />
+      <group targetFramework="net9.0-ios13.0">
+        <dependency id="walnut.flic2lib.Platforms" version="1.0.6" />
       </group>
     </dependencies>
   </metadata>
@@ -27,14 +32,14 @@
     <file src="docs/maui_readme.md" target="docs/" />
     <!-- Android -->
     <file src="flic2lib.Maui/bin/Release/net9.0-android/flic2lib.Maui.dll"
-      target="lib/net9.0-android21/" />
+      target="lib/net9.0-android29.0/" />
     <file src="flic2lib.Maui/bin/Release/net9.0-android/flic2lib.Maui.pdb"
-      target="lib/net9.0-android21/" />
+      target="lib/net9.0-android29.0/" />
     <file src="flic2lib.Maui/bin/Release/net9.0-android/flic2lib.Maui.xml"
-      target="lib/net9.0-android21/" />
+      target="lib/net9.0-android29.0/" />
 
     <!-- ios -->
-    <file src="flic2lib.Maui/bin/Release/net9.0-ios/flic2lib.Maui.dll" target="lib/net9.0-ios14/" />
-    <file src="flic2lib.Maui/bin/Release/net9.0-ios/flic2lib.Maui.pdb" target="lib/net9.0-ios14/" />
+    <file src="flic2lib.Maui/bin/Release/net9.0-ios/flic2lib.Maui.dll" target="lib/net9.0-ios13.0/" />
+    <file src="flic2lib.Maui/bin/Release/net9.0-ios/flic2lib.Maui.pdb" target="lib/net9.0-ios13.0/" />
   </files>
 </package>

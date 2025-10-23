@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using flic2lib.Maui;
@@ -12,8 +13,23 @@ namespace flic2lib.Maui.Sample
         {
             base.OnCreate(savedInstanceState);
 
-            // Keep Flic2 buttons connected when app is in background
-            Configure.KeepFlicButtonsConnected(this);
+            // Start the local Flic background service for persistent button connectivity
+            StartFlicBackgroundService();
+        }
+
+        private void StartFlicBackgroundService()
+        {
+            var serviceIntent = new Intent(this, typeof(Platforms.Android.FlicBackgroundService));
+
+            // Use StartForegroundService for Android 8.0+ (API 26+), StartService for older versions
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
+            {
+                StartForegroundService(serviceIntent);
+            }
+            else
+            {
+                StartService(serviceIntent);
+            }
         }
     }
 }

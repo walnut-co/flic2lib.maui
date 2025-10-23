@@ -1,0 +1,301 @@
+name: Deploy to NuGet
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Triggers on version tags like v1.0.6
+  workflow_dispatch:  # Allow manual trigger
+    inputs:
+      version:
+        description: 'Version to deploy (e.g., 1.0.6)'
+        required: true
+        default: '1.0.6'
+
+env:
+  DOTNET_VERSION: '9.0.x'
+  CONFIGURATION: Release
+
+jobs:
+  # Build Android components on Windows
+  build-android:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Extract version
+      id: extract_version
+      shell: pwsh
+      run: |
+        if ($env:GITHUB_EVENT_NAME -eq "push") {
+          $version = $env:GITHUB_REF -replace 'refs/tags/v', ''
+        } else {
+          $version = "${{ github.event.inputs.version }}"
+        }
+        echo "VERSION=$version" >> $env:GITHUB_OUTPUT
+        echo "Building Android for version: $version"
+
+    - name: Restore dependencies
+      run: dotnet restore flic2lib.maui.sln
+
+    - name: Build Android binding project
+      run: dotnet build flic2lib.android/flic2lib.android.csproj --configuration ${{ env.CONFIGURATION }} --no-restore
+
+    - name: Build MAUI library (Android)
+      run: dotnet build flic2lib.Maui/flic2lib.Maui.csproj --configuration ${{ env.CONFIGURATION }} --framework net9.0-android --no-restore
+
+    - name: Upload Android artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-build-${{ steps.extract_version.outputs.VERSION }}
+        path: |
+          flic2lib.android/bin/Release/net9.0-android/**
+          flic2lib.Maui/bin/Release/net9.0-android/**
+        retention-days: 1
+
+  # Build iOS components on macOS
+  build-ios:
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Extract version
+      id: extract_version
+      shell: bash
+      run: |
+        if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
+          version=${GITHUB_REF#refs/tags/v}
+        else
+          version="${{ github.event.inputs.version }}"
+        fi
+        echo "VERSION=$version" >> $GITHUB_OUTPUT
+        echo "Building iOS for version: $version"
+
+    - name: Restore dependencies
+      run: dotnet restore flic2lib.maui.sln
+
+    - name: Build iOS binding project
+      run: dotnet build flic2lib.ios/flic2lib.ios.csproj --configuration ${{ env.CONFIGURATION }} --no-restore
+
+    - name: Build MAUI library (iOS)
+      run: dotnet build flic2lib.Maui/flic2lib.Maui.csproj --configuration ${{ env.CONFIGURATION }} --framework net9.0-ios --no-restore
+
+    - name: Upload iOS artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ios-build-${{ steps.extract_version.outputs.VERSION }}
+        path: |
+          flic2lib.ios/bin/Release/net9.0-ios/**
+          flic2lib.Maui/bin/Release/net9.0-ios/**
+        retention-days: 1
+
+  # Package and deploy on Windows (after both builds complete)
+  package-and-deploy:
+    runs-on: windows-latest
+    needs: [build-android, build-ios]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup NuGet
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-version: 'latest'
+
+    - name: Extract version
+      id: extract_version
+      shell: pwsh
+      run: |
+        if ($env:GITHUB_EVENT_NAME -eq "push") {
+          $version = $env:GITHUB_REF -replace 'refs/tags/v', ''
+        } else {
+          $version = "${{ github.event.inputs.version }}"
+        }
+        echo "VERSION=$version" >> $env:GITHUB_OUTPUT
+        echo "Packaging version: $version"
+
+    - name: Download Android artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: android-build-${{ steps.extract_version.outputs.VERSION }}
+
+    - name: Download iOS artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: ios-build-${{ steps.extract_version.outputs.VERSION }}
+
+    - name: Update version in nuspec files
+      shell: pwsh
+      run: |
+        $version = "${{ steps.extract_version.outputs.VERSION }}"
+        
+        # Update flic2lib.Platforms.simple.nuspec
+        $platformsNuspec = Get-Content "flic2lib.Platforms.simple.nuspec" -Raw
+        $platformsNuspec = $platformsNuspec -replace '<version>[\d\.]+</version>', "<version>$version</version>"
+        Set-Content "flic2lib.Platforms.simple.nuspec" -Value $platformsNuspec
+        
+        # Update flic2lib.Maui.nuspec
+        $mauiNuspec = Get-Content "flic2lib.Maui.nuspec" -Raw
+        $mauiNuspec = $mauiNuspec -replace '<version>[\d\.]+</version>', "<version>$version</version>"
+        $mauiNuspec = $mauiNuspec -replace 'version="[\d\.]+"', "version=`"$version`""
+        Set-Content "flic2lib.Maui.nuspec" -Value $mauiNuspec
+
+    - name: Verify build outputs exist
+      shell: pwsh
+      run: |
+        $requiredFiles = @(
+          "flic2lib.android/bin/Release/net9.0-android/flic2lib.android.dll",
+          "flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.dll",
+          "flic2lib.Maui/bin/Release/net9.0-android/flic2lib.Maui.dll",
+          "flic2lib.Maui/bin/Release/net9.0-ios/flic2lib.Maui.dll"
+        )
+        
+        foreach ($file in $requiredFiles) {
+          if (-not (Test-Path $file)) {
+            Write-Error "Required file missing: $file"
+            exit 1
+          } else {
+            Write-Host "✓ Found: $file" -ForegroundColor Green
+          }
+        }
+
+    - name: Create Platforms NuGet package
+      shell: pwsh
+      run: |
+        $version = "${{ steps.extract_version.outputs.VERSION }}"
+        nuget pack flic2lib.Platforms.simple.nuspec -Properties "copyright=Copyright 2025 Walnut"
+        
+        # Verify package was created
+        $packageFile = "walnut.flic2lib.Platforms.$version.nupkg"
+        if (-not (Test-Path $packageFile)) {
+          Write-Error "Failed to create Platforms package: $packageFile"
+          exit 1
+        }
+        Write-Host "✓ Created Platforms package: $packageFile" -ForegroundColor Green
+
+    - name: Create MAUI NuGet package
+      shell: pwsh
+      run: |
+        $version = "${{ steps.extract_version.outputs.VERSION }}"
+        nuget pack flic2lib.Maui.nuspec
+        
+        # Verify package was created
+        $packageFile = "walnut.flic2lib.Maui.$version.nupkg"
+        if (-not (Test-Path $packageFile)) {
+          Write-Error "Failed to create MAUI package: $packageFile"
+          exit 1
+        }
+        Write-Host "✓ Created MAUI package: $packageFile" -ForegroundColor Green
+
+    - name: Test packages locally
+      shell: pwsh
+      run: |
+        $version = "${{ steps.extract_version.outputs.VERSION }}"
+        
+        # Create a temporary directory for testing
+        $testDir = "test-packages"
+        New-Item -ItemType Directory -Path $testDir -Force
+        
+        # Copy packages to test directory
+        Copy-Item "walnut.flic2lib.Platforms.$version.nupkg" $testDir
+        Copy-Item "walnut.flic2lib.Maui.$version.nupkg" $testDir
+        
+        Write-Host "Package files ready for deployment:" -ForegroundColor Yellow
+        Get-ChildItem $testDir -Filter "*.nupkg" | ForEach-Object {
+          Write-Host "  $($_.Name) ($($_.Length) bytes)" -ForegroundColor Cyan
+        }
+
+    - name: Deploy Platforms package to NuGet
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      shell: pwsh
+      run: |
+        $version = "${{ steps.extract_version.outputs.VERSION }}"
+        $packageFile = "walnut.flic2lib.Platforms.$version.nupkg"
+        
+        Write-Host "Pushing Platforms package to NuGet..." -ForegroundColor Yellow
+        nuget push $packageFile -ApiKey $env:NUGET_API_KEY -Source https://api.nuget.org/v3/index.json
+        
+        if ($LASTEXITCODE -eq 0) {
+          Write-Host "✓ Successfully deployed Platforms package" -ForegroundColor Green
+        } else {
+          Write-Error "Failed to deploy Platforms package"
+          exit 1
+        }
+
+    - name: Deploy MAUI package to NuGet
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      shell: pwsh
+      run: |
+        $version = "${{ steps.extract_version.outputs.VERSION }}"
+        $packageFile = "walnut.flic2lib.Maui.$version.nupkg"
+        
+        Write-Host "Pushing MAUI package to NuGet..." -ForegroundColor Yellow
+        nuget push $packageFile -ApiKey $env:NUGET_API_KEY -Source https://api.nuget.org/v3/index.json
+        
+        if ($LASTEXITCODE -eq 0) {
+          Write-Host "✓ Successfully deployed MAUI package" -ForegroundColor Green
+        } else {
+          Write-Error "Failed to deploy MAUI package"
+          exit 1
+        }
+
+    - name: Upload packages as artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: nuget-packages-${{ steps.extract_version.outputs.VERSION }}
+        path: '*.nupkg'
+        retention-days: 30
+
+    - name: Create GitHub release
+      if: github.event_name == 'push'
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ steps.extract_version.outputs.VERSION }}
+        body: |
+          ## walnut.flic2lib.Maui v${{ steps.extract_version.outputs.VERSION }}
+          
+          This release includes:
+          - `walnut.flic2lib.Platforms` v${{ steps.extract_version.outputs.VERSION }}
+          - `walnut.flic2lib.Maui` v${{ steps.extract_version.outputs.VERSION }}
+          
+          ### Changes
+          - Updated platform bindings for .NET 9
+          - Android API 29 and iOS 13.0 minimum support
+          - Enhanced background event handling
+          - Improved compatibility with modern platform requirements
+          
+          ### Installation
+          ```xml
+          <PackageReference Include="walnut.flic2lib.Maui" Version="${{ steps.extract_version.outputs.VERSION }}" />
+          ```
+          
+          ### NuGet Packages
+          - [walnut.flic2lib.Maui](https://www.nuget.org/packages/walnut.flic2lib.Maui/${{ steps.extract_version.outputs.VERSION }})
+          - [walnut.flic2lib.Platforms](https://www.nuget.org/packages/walnut.flic2lib.Platforms/${{ steps.extract_version.outputs.VERSION }})
+        draft: false
+        prerelease: false

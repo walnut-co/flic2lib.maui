@@ -12,29 +12,35 @@
             <Label
                 Text="Hello, Flic!"
                 FontSize="32"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"/>
 
             <Button
                 Text="Init Flic"
                 Clicked="OnInitClicked"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"/>
 
             <Button
                 Text="Find Buttons"
                 Clicked="OnFindClicked"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"/>
 
             <Button
                 Text="Start listeners"
                 Clicked="OnStartListenersClicked"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"/>
 
-            <Label 
+            <Button
+                Text="Background Service Info"
+                Clicked="OnBackgroundInfoClicked"
+                HorizontalOptions="Center"
+                BackgroundColor="LightBlue"/>
+
+            <Label
                 Text="Current count: 0"
                 FontSize="18"
                 FontAttributes="Bold"
                 x:Name="CounterLabel"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"/>
 
         </VerticalStackLayout>
     </ScrollView>
