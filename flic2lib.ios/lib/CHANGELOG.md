@@ -56,7 +56,7 @@ This file documents the changes between different build versions of the `flic2li
 
 * Removed SSL pinning from the automatic firmware update feature. This is mainly to avoid any certificate issues in the future. All firmware images are signed by Shortcut Labs regardless, so SSL pinning is not necessary.
 
-## flic2lib-ios 1.0.3
+## flic2lib-ios 1.0.4
 
 ### Minor Changes
 
