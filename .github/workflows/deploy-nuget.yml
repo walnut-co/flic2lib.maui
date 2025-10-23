@@ -2,8 +2,6 @@ name: Deploy to NuGet
 
 on:
   push:
-    branches:
-      - main
     tags:
       - 'v*.*.*'  # Triggers on version tags like v1.0.6
   workflow_dispatch:  # Allow manual trigger
