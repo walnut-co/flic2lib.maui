@@ -9,6 +9,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <!-- Force linking of the framework when consumed -->
     <ForceLoad>true</ForceLoad>
+    <!-- Generate XML documentation for NuGet package -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Disable XML documentation warnings for binding projects -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
