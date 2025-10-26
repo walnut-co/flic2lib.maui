@@ -2,13 +2,14 @@
 <package>
     <metadata>
         <id>walnut.flic2lib.Platforms</id>
-        <version>1.0.6</version>
+        <version>1.0.9</version>
         <authors>walnut</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <license type="expression">MIT</license>
         <projectUrl>https://github.com/walnut-co/flic2lib.maui</projectUrl>
         <description>Flic2lib platform bindings for net9 ios and android</description>
-        <releaseNotes>Updated to .NET 9 and renamed to walnut.flic2lib.Platforms</releaseNotes>
+        <releaseNotes>Version 1.0.9: Improved package stability by removing unnecessary build
+            artifacts. Enhanced CI/CD compatibility.</releaseNotes>
         <readme>docs/platforms_readme.md</readme>
         <copyright>$copyright$</copyright>
         <tags>flic flic2 buttons platform bindings</tags>

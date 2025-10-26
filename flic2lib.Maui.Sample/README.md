@@ -250,7 +250,7 @@ var manifestEntries = AndroidBackgroundServiceHelper.GetManifestEntries();
 
 - [Android Background Service Documentation](../docs/android_background_solution.md)
 - [Cross-Platform Background Guide](../docs/cross_platform_background_execution.md)
-- [Flic2lib API Reference](../docs/maui_readme.md)
+- [Platform Bindings Guide](../docs/platforms_readme.md)
 
 ---
 

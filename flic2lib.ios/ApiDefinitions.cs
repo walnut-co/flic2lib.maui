@@ -8,19 +8,19 @@ namespace Flic2lib.iOS;
 partial interface Constants
 {
 	// extern NSString *const FLICErrorDomain;
-	[Field ("FLICErrorDomain", "__Internal")]
+	[Field ("FLICErrorDomain", "flic2lib")]
 	NSString FLICErrorDomain { get; }
 
 	// extern NSString *const FLICButtonScannerErrorDomain;
-	[Field ("FLICButtonScannerErrorDomain", "__Internal")]
+	[Field ("FLICButtonScannerErrorDomain", "flic2lib")]
 	NSString FLICButtonScannerErrorDomain { get; }
 
 	// extern double flic2libVersionNumber;
-	[Field ("flic2libVersionNumber", "__Internal")]
+	[Field ("flic2libVersionNumber", "flic2lib")]
 	double flic2libVersionNumber { get; }
 
 	// extern const unsigned char[] flic2libVersionString;
-	[Field ("flic2libVersionString", "__Internal")]
+	[Field ("flic2libVersionString", "flic2lib")]
 	NSString flic2libVersionString { get; }
 }
 

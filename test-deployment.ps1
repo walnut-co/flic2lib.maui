@@ -5,13 +5,13 @@
 .DESCRIPTION
     This script simulates the GitHub Actions workflow locally to test package creation
 .PARAMETER Version
-    The version to use for the packages (e.g., "1.0.7")
+    The version to use for the packages (e.g., "1.0.9")
 .PARAMETER SkipBuild
     Skip the build process and only create packages from existing binaries
 .EXAMPLE
-    .\test-deployment.ps1 -Version "1.0.7"
+    .\test-deployment.ps1 -Version "1.0.9"
 .EXAMPLE
-    .\test-deployment.ps1 -Version "1.0.7" -SkipBuild
+    .\test-deployment.ps1 -Version "1.0.9" -SkipBuild
 #>
 
 param(
@@ -32,7 +32,7 @@ function Write-Error($message) { Write-Host "✗ $message" -ForegroundColor Red 
 
 # Validate version format
 if ($Version -notmatch '^\d+\.\d+\.\d+$') {
-    Write-Error "Version must be in format X.Y.Z (e.g., 1.0.7)"
+    Write-Error "Version must be in format X.Y.Z (e.g., 1.0.9)"
     exit 1
 }
 
@@ -89,7 +89,8 @@ try {
         if ($LASTEXITCODE -ne 0) { throw "Failed to build MAUI project" }
         
         Write-Success "All projects built successfully"
-    } else {
+    }
+    else {
         Write-Warning "Skipping build process - using existing binaries"
     }
 
@@ -106,7 +107,8 @@ try {
         if (-not (Test-Path $file)) {
             Write-Error "Required file missing: $file"
             throw "Build verification failed"
-        } else {
+        }
+        else {
             Write-Success "Found: $file"
         }
     }
@@ -158,7 +160,8 @@ try {
         $entryCount = $zip.Entries.Count
         $zip.Dispose()
         Write-Success "Platforms package format valid ($entryCount files)"
-    } catch {
+    }
+    catch {
         Write-Error "Platforms package format validation failed: $($_.Exception.Message)"
     }
     
@@ -167,7 +170,8 @@ try {
         $entryCount = $zip.Entries.Count
         $zip.Dispose()
         Write-Success "MAUI package format valid ($entryCount files)"
-    } catch {
+    }
+    catch {
         Write-Error "MAUI package format validation failed: $($_.Exception.Message)"
     }
     
@@ -177,10 +181,12 @@ try {
     Write-Info "  nuget push test-packages/$platformsPackage -ApiKey YOUR_API_KEY -Source https://api.nuget.org/v3/index.json"
     Write-Info "  nuget push test-packages/$mauiPackage -ApiKey YOUR_API_KEY -Source https://api.nuget.org/v3/index.json"
 
-} catch {
+}
+catch {
     Write-Error "Test deployment failed: $($_.Exception.Message)"
     exit 1
-} finally {
+}
+finally {
     # Restore original versions in nuspec files if they were changed
     Write-Info "Restoring original nuspec versions..."
     

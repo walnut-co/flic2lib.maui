@@ -27,7 +27,7 @@ Contains .NET 9 MAUI implementation for cross-platform Flic2 button integration.
 ## Installation
 
 ```xml
-<PackageReference Include="walnut.flic2lib.Maui" Version="1.0.6" />
+<PackageReference Include="walnut.flic2lib.Maui" Version="1.0.9" />
 ```
 
 The `walnut.flic2lib.Platforms` package will be automatically included as a dependency.
@@ -41,37 +41,12 @@ This binding is based on the official Flic2 SDKs:
 
 ## Documentation
 
-- [MAUI Implementation Guide](docs/maui_readme.md)
 - [Platform Bindings Guide](docs/platforms_readme.md)
 - [Android Background Execution](docs/android_background_execution.md)
 - [iOS Background Execution](docs/ios_background_execution.md)
 - [Cross-Platform Background Guide](docs/cross_platform_background_execution.md)
 
 ## Development
-
-### Building Locally
-
-```bash
-# Restore dependencies
-dotnet restore flic2lib.maui.sln
-
-# Build all projects
-dotnet build flic2lib.maui.sln --configuration Release
-```
-
-### Creating Packages
-
-Use the provided test script to create packages locally:
-
-```powershell
-.\test-deployment.ps1 -Version "1.0.7"
-```
-
-### Deployment
-
-See [DEPLOYMENT_WORKFLOW.md](DEPLOYMENT_WORKFLOW.md) for information about automated NuGet deployment via GitHub Actions.
-
-## Requirements
 
 - .NET 9.0
 - Visual Studio 2022 or JetBrains Rider
