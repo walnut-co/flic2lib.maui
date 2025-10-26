@@ -13,8 +13,9 @@ This repository contains two NuGet packages:
 Contains .NET 9 Android and iOS bindings for the Flic2 native SDKs.
 
 - **Android**: Targets API 29+ (Android 10+)
-- **iOS**: Targets iOS 13.0+
+- **iOS**: Targets iOS 13.0+ with automatic linking support
 - Includes native libraries and framework files
+- **Version 1.0.9+**: Automatic iOS linking fixes included
 
 ### walnut.flic2lib.Maui
 Contains .NET 9 MAUI implementation for cross-platform Flic2 button integration.

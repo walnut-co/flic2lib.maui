@@ -7,6 +7,8 @@
     <IsBindingProject>true</IsBindingProject>
     <DebugType>full</DebugType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- Force linking of the framework when consumed -->
+    <ForceLoad>true</ForceLoad>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +19,11 @@
   <ItemGroup>
     <NativeReference Include="lib\flic2lib.xcframework">
       <Kind>Framework</Kind>
-      <Frameworks></Frameworks>
+      <Frameworks>Foundation CoreBluetooth</Frameworks>
+      <ForceLoad>true</ForceLoad>
+      <NeedsGccExceptionHandling>false</NeedsGccExceptionHandling>
+      <IsCxx>false</IsCxx>
+      <LinkerFlags>-framework Foundation -framework CoreBluetooth -force_load</LinkerFlags>
     </NativeReference>
   </ItemGroup>
 

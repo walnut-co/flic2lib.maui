@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+    <!-- Ensure proper native framework references for iOS apps consuming this package -->
+    <ItemGroup
+        Condition="'$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)'))' == 'ios'">
+        <!-- Include the xcframework resources that contain the native library -->
+        <Content
+            Include="$(MSBuildThisFileDirectory)../lib/net9.0-ios13.0/flic2lib.ios.resources/**/*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <Link>flic2lib.ios.resources/%(RecursiveDir)%(Filename)%(Extension)</Link>
+        </Content>
+    </ItemGroup>
+
+    <PropertyGroup
+        Condition="'$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)'))' == 'ios'">
+        <!-- Add required linker flags to resolve native symbols -->
+        <MtouchExtraArgs>$(MtouchExtraArgs) -gcc_flags "-framework Foundation -framework
+            CoreBluetooth -ObjC"</MtouchExtraArgs>
+    </PropertyGroup>
+</Project>
