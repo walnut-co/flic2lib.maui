@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-    <PropertyGroup
-        Condition="'$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)'))' == 'ios'">
+    <PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
         <!-- Ensure proper framework linking for iOS projects consuming this package -->
         <MtouchExtraArgs>$(MtouchExtraArgs) -framework Foundation -framework CoreBluetooth</MtouchExtraArgs>
         <!-- Force load the flic2lib framework to resolve undefined symbols -->
