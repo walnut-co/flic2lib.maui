@@ -2,24 +2,23 @@
 <package>
   <metadata>
     <id>walnut.flic2lib.Maui</id>
-    <version>1.0.12</version>
+    <version>1.0.13</version>
     <authors>walnut</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <!-- <icon>icon.png</icon> -->
     <projectUrl>https://github.com/walnut-co/flic2lib.maui</projectUrl>
     <description>Flic2lib For usage in MAUI with comprehensive background event handling</description>
-    <releaseNotes>Version 1.0.12: Fixed MSBuild condition evaluation errors in platform
-      dependencies.
-      Improved iOS linking configuration and build compatibility.</releaseNotes>
+    <releaseNotes>Version 1.0.13: Improved manifest inclusion and iOS linker flags. Only
+      MtouchExtraArgs used for framework linking. Verified manifest presence in package.</releaseNotes>
     <copyright>Copyright 2025 Walnut</copyright>
     <tags>flic flic2 buttons platform bindings maui background emergency</tags>
     <dependencies>
       <group targetFramework="net9.0-android29.0">
-        <dependency id="walnut.flic2lib.Platforms" version="1.0.12" />
+        <dependency id="walnut.flic2lib.Platforms" version="1.0.13" />
       </group>
       <group targetFramework="net9.0-ios13.0">
-        <dependency id="walnut.flic2lib.Platforms" version="1.0.12" />
+        <dependency id="walnut.flic2lib.Platforms" version="1.0.13" />
       </group>
     </dependencies>
   </metadata>

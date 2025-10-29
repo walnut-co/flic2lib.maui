@@ -11,8 +11,7 @@
     </ItemGroup>
 
     <PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
-        <!-- Add required linker flags to resolve native symbols -->
-        <MtouchExtraArgs>$(MtouchExtraArgs) -gcc_flags "-framework Foundation -framework
-            CoreBluetooth -ObjC"</MtouchExtraArgs>
+        <!-- Add required frameworks for iOS linking -->
+        <MtouchExtraArgs>$(MtouchExtraArgs) -framework Foundation -framework CoreBluetooth -ObjC</MtouchExtraArgs>
     </PropertyGroup>
 </Project>
