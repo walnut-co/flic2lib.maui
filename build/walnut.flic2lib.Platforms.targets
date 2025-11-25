@@ -10,8 +10,9 @@
         </Content>
     </ItemGroup>
 
+    <!-- Framework flags are set in .props file to avoid duplication -->
+    <!-- Only -ObjC flag is added here for Objective-C category support -->
     <PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
-        <!-- Add required frameworks for iOS linking -->
-        <MtouchExtraArgs>$(MtouchExtraArgs) -framework Foundation -framework CoreBluetooth -ObjC</MtouchExtraArgs>
+        <MtouchExtraArgs>$(MtouchExtraArgs) -ObjC</MtouchExtraArgs>
     </PropertyGroup>
 </Project>

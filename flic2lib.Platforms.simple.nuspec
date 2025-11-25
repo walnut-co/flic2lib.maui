@@ -2,14 +2,13 @@
 <package>
     <metadata>
         <id>walnut.flic2lib.Platforms</id>
-        <version>1.0.13</version>
+        <version>1.0.14</version>
         <authors>walnut</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <license type="expression">MIT</license>
         <projectUrl>https://github.com/walnut-co/flic2lib.maui</projectUrl>
         <description>Flic2lib platform bindings for net9 ios and android</description>
-        <releaseNotes>Version 1.0.13: Improved manifest inclusion and iOS linker flags. Only
-            MtouchExtraArgs used for framework linking. Verified manifest presence in package.</releaseNotes>
+        <releaseNotes>Version 1.0.14: Fixed iOS linker flags duplication. Removed -gcc_flags wrapper. Framework flags in props, -ObjC in targets. Verified manifest and xcframework inclusion.</releaseNotes>
         <readme>docs/platforms_readme.md</readme>
         <copyright>$copyright$</copyright>
         <tags>flic flic2 buttons platform bindings</tags>
