@@ -4,7 +4,7 @@
     <ItemGroup Condition="$(TargetFramework.Contains('-ios'))">
         <!-- Include the xcframework as a NativeReference instead of Content -->
         <NativeReference
-            Include="$(MSBuildThisFileDirectory)../lib/net10.0-ios13.0/flic2lib.ios.resources/flic2lib.xcframework">
+            Include="$(MSBuildThisFileDirectory)../lib/net10.0-ios15.0/flic2lib.ios.resources/flic2lib.xcframework">
             <Kind>Framework</Kind>
             <ForceLoad>true</ForceLoad>
             <Frameworks>Foundation CoreBluetooth</Frameworks>

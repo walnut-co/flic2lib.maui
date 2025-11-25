@@ -2,21 +2,21 @@
 <package>
     <metadata>
         <id>walnut.flic2lib.Platforms</id>
-        <version>1.0.16</version>
+        <version>1.0.17</version>
         <authors>walnut</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <license type="expression">MIT</license>
         <projectUrl>https://github.com/walnut-co/flic2lib.maui</projectUrl>
         <description>Flic2lib platform bindings for net10 ios and android</description>
-        <releaseNotes>Version 1.0.16: Upgraded to .NET 10 with updated dependencies and MAUI
-            Controls 10.0.0.</releaseNotes>
+        <releaseNotes>Version 1.0.17: Upgraded to .NET 10 with updated dependencies and MAUI
+            Controls 10.0.0. Minimum iOS version updated to 15.0 for Xcode 26.1.1 compatibility.</releaseNotes>
         <readme>docs/platforms_readme.md</readme>
         <copyright>$copyright$</copyright>
         <tags>flic flic2 buttons platform bindings</tags>
         <dependencies>
             <group targetFramework="net10.0-android29.0">
             </group>
-            <group targetFramework="net10.0-ios13.0">
+            <group targetFramework="net10.0-ios15.0">
                 <dependency id="System.Runtime.InteropServices.NFloat.Internal" version="6.0.1"
                     exclude="Build,Analyzers" />
             </group>
@@ -40,14 +40,14 @@
 
         <!-- ios -->
         <file src="flic2lib.ios/bin/Release/net10.0-ios/flic2lib.ios.dll"
-            target="lib/net10.0-ios13.0/" />
+            target="lib/net10.0-ios15.0/" />
         <file src="flic2lib.ios/bin/Release/net10.0-ios/flic2lib.ios.pdb"
-            target="lib/net10.0-ios13.0/" />
+            target="lib/net10.0-ios15.0/" />
         <file src="flic2lib.ios/bin/Release/net10.0-ios/flic2lib.ios.xml"
-            target="lib/net10.0-ios13.0/" />
+            target="lib/net10.0-ios15.0/" />
         <!-- Include the resources.zip file - .NET will automatically extract it when package is
         consumed -->
         <file src="flic2lib.ios/bin/Release/net10.0-ios/flic2lib.ios.resources.zip"
-            target="lib/net10.0-ios13.0/" />
+            target="lib/net10.0-ios15.0/" />
     </files>
 </package>

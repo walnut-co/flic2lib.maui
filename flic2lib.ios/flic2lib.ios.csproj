@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0-ios</TargetFramework>
-    <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
     <IsBindingProject>true</IsBindingProject>
@@ -27,7 +27,6 @@
       <ForceLoad>true</ForceLoad>
       <NeedsGccExceptionHandling>false</NeedsGccExceptionHandling>
       <IsCxx>false</IsCxx>
-      <LinkerFlags>-framework Foundation -framework CoreBluetooth -force_load</LinkerFlags>
     </NativeReference>
   </ItemGroup>
 

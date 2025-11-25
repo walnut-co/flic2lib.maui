@@ -9,16 +9,20 @@
 		<DebugType>full</DebugType>
 	</PropertyGroup>
 
-	<!-- Separate PropertyGroup to avoid ibtool parsing issues in .NET 10 -->
-	<PropertyGroup
-		Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
-	</PropertyGroup>
-
-	<PropertyGroup
-		Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-		<SupportedOSPlatformVersion>29.0</SupportedOSPlatformVersion>
-	</PropertyGroup>
+	<!-- Platform Versions - Use Choose/When to avoid ibtool parsing issues with line breaks -->
+	<Choose>
+		<When Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
+			<PropertyGroup>
+				<SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
+			</PropertyGroup>
+		</When>
+		<When
+			Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+			<PropertyGroup>
+				<SupportedOSPlatformVersion>29.0</SupportedOSPlatformVersion>
+			</PropertyGroup>
+		</When>
+	</Choose>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.0" />
