@@ -49,7 +49,7 @@ jobs:
         echo "Building Android for version: $version"
 
     - name: Restore dependencies
-      run: dotnet restore flic2lib.maui.sln
+      run: dotnet restore flic2lib.sharp.sln
 
     - name: Build Android binding project
       run: dotnet build flic2lib.android/flic2lib.android.csproj --configuration ${{ env.CONFIGURATION }} --no-restore
@@ -99,7 +99,7 @@ jobs:
         echo "Building iOS for version: $version"
 
     - name: Restore dependencies
-      run: dotnet restore flic2lib.maui.sln
+      run: dotnet restore flic2lib.sharp.sln
 
     - name: Build iOS binding project
       run: dotnet build flic2lib.ios/flic2lib.ios.csproj --configuration ${{ env.CONFIGURATION }} --no-restore
