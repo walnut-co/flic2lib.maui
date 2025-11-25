@@ -9,7 +9,8 @@
     <!-- <icon>icon.png</icon> -->
     <projectUrl>https://github.com/walnut-co/flic2lib.maui</projectUrl>
     <description>Flic2lib For usage in MAUI with comprehensive background event handling</description>
-    <releaseNotes>Version 1.0.14: Fixed iOS linker flags duplication. Removed -gcc_flags wrapper. Framework flags in props, -ObjC in targets. Verified manifest and xcframework inclusion.</releaseNotes>
+    <releaseNotes>Version 1.0.14: Fixed iOS linker flags duplication. Removed -gcc_flags wrapper.
+      Framework flags in props, -ObjC in targets. Verified manifest and xcframework inclusion.</releaseNotes>
     <copyright>Copyright 2025 Walnut</copyright>
     <tags>flic flic2 buttons platform bindings maui background emergency</tags>
     <dependencies>
