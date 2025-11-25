@@ -12,7 +12,7 @@ on:
         default: '1.0.7'
 
 env:
-  DOTNET_VERSION: '9.0.x'
+  DOTNET_VERSION: '10.0.x'
   CONFIGURATION: Release
 
 jobs:
@@ -55,15 +55,15 @@ jobs:
       run: dotnet build flic2lib.android/flic2lib.android.csproj --configuration ${{ env.CONFIGURATION }} --no-restore
 
     - name: Build MAUI library (Android)
-      run: dotnet build flic2lib.Maui/flic2lib.Maui.csproj --configuration ${{ env.CONFIGURATION }} --framework net9.0-android --no-restore
+      run: dotnet build flic2lib.Maui/flic2lib.Maui.csproj --configuration ${{ env.CONFIGURATION }} --framework net10.0-android --no-restore
 
     - name: Upload Android artifacts
       uses: actions/upload-artifact@v4
       with:
         name: android-build-${{ steps.extract_version.outputs.VERSION }}
         path: |
-          flic2lib.android/bin/Release/net9.0-android/**
-          flic2lib.Maui/bin/Release/net9.0-android/**
+          flic2lib.android/bin/Release/net10.0-android/**
+          flic2lib.Maui/bin/Release/net10.0-android/**
         retention-days: 1
 
   # Build iOS components on macOS
@@ -105,15 +105,15 @@ jobs:
       run: dotnet build flic2lib.ios/flic2lib.ios.csproj --configuration ${{ env.CONFIGURATION }} --no-restore
 
     - name: Build MAUI library (iOS)
-      run: dotnet build flic2lib.Maui/flic2lib.Maui.csproj --configuration ${{ env.CONFIGURATION }} --framework net9.0-ios --no-restore
+      run: dotnet build flic2lib.Maui/flic2lib.Maui.csproj --configuration ${{ env.CONFIGURATION }} --framework net10.0-ios --no-restore
 
     - name: Upload iOS artifacts
       uses: actions/upload-artifact@v4
       with:
         name: ios-build-${{ steps.extract_version.outputs.VERSION }}
         path: |
-          flic2lib.ios/bin/Release/net9.0-ios/**
-          flic2lib.Maui/bin/Release/net9.0-ios/**
+          flic2lib.ios/bin/Release/net10.0-ios/**
+          flic2lib.Maui/bin/Release/net10.0-ios/**
         retention-days: 1
 
   # Package and deploy on Windows (after both builds complete)
@@ -209,10 +209,10 @@ jobs:
       shell: pwsh
       run: |
         $requiredFiles = @(
-          "flic2lib.android/bin/Release/net9.0-android/flic2lib.android.dll",
-          "flic2lib.ios/bin/Release/net9.0-ios/flic2lib.ios.dll",
-          "flic2lib.Maui/bin/Release/net9.0-android/flic2lib.Maui.dll",
-          "flic2lib.Maui/bin/Release/net9.0-ios/flic2lib.Maui.dll"
+          "flic2lib.android/bin/Release/net10.0-android/flic2lib.android.dll",
+          "flic2lib.ios/bin/Release/net10.0-ios/flic2lib.ios.dll",
+          "flic2lib.Maui/bin/Release/net10.0-android/flic2lib.Maui.dll",
+          "flic2lib.Maui/bin/Release/net10.0-ios/flic2lib.Maui.dll"
         )
         
         foreach ($file in $requiredFiles) {
