@@ -107,6 +107,15 @@ jobs:
     - name: Build MAUI library (iOS)
       run: dotnet build flic2lib.Maui/flic2lib.Maui.csproj --configuration ${{ env.CONFIGURATION }} --framework net10.0-ios --no-restore
 
+    - name: List iOS build outputs for debugging
+      shell: bash
+      run: |
+        echo "=== iOS binding bin folder ==="
+        ls -la flic2lib.ios/bin/Release/net10.0-ios/ || echo "Folder not found"
+        echo ""
+        echo "=== iOS binding resources folder ==="
+        ls -la flic2lib.ios/bin/Release/net10.0-ios/flic2lib.ios.resources/ || echo "Resources folder not found"
+
     - name: Upload iOS artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -148,11 +157,30 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: android-build-${{ steps.extract_version.outputs.VERSION }}
+        path: .
 
     - name: Download iOS artifacts
       uses: actions/download-artifact@v4
       with:
         name: ios-build-${{ steps.extract_version.outputs.VERSION }}
+        path: .
+
+    - name: Debug downloaded artifacts structure
+      shell: pwsh
+      run: |
+        Write-Host "=== Downloaded artifact structure ===" -ForegroundColor Cyan
+        Write-Host "iOS binding folder:" -ForegroundColor Yellow
+        if (Test-Path "flic2lib.ios") {
+          Get-ChildItem "flic2lib.ios" -Recurse -File | Select-Object -First 20 | ForEach-Object {
+            Write-Host "  $($_.FullName.Replace($PWD, '.'))"
+          }
+        } else {
+          Write-Host "  flic2lib.ios folder not found!" -ForegroundColor Red
+          Write-Host "  Root files:" -ForegroundColor Yellow
+          Get-ChildItem -File | ForEach-Object { Write-Host "    $($_.Name)" }
+          Write-Host "  Root folders:" -ForegroundColor Yellow
+          Get-ChildItem -Directory | ForEach-Object { Write-Host "    $($_.Name)/" }
+        }
 
     - name: Update version in nuspec files
       shell: pwsh
@@ -215,13 +243,46 @@ jobs:
           "flic2lib.Maui/bin/Release/net10.0-ios/flic2lib.Maui.dll"
         )
         
+        $allFilesExist = $true
         foreach ($file in $requiredFiles) {
           if (-not (Test-Path $file)) {
-            Write-Error "Required file missing: $file"
-            exit 1
+            Write-Host "✗ Missing: $file" -ForegroundColor Red
+            $allFilesExist = $false
           } else {
             Write-Host "✓ Found: $file" -ForegroundColor Green
           }
+        }
+        
+        # Check for iOS resources folder
+        Write-Host "`nChecking iOS resources folder:" -ForegroundColor Cyan
+        $iosResourcesPath = "flic2lib.ios/bin/Release/net10.0-ios/flic2lib.ios.resources"
+        if (Test-Path $iosResourcesPath) {
+          Write-Host "✓ Found iOS resources folder" -ForegroundColor Green
+          $manifestPath = "$iosResourcesPath/manifest"
+          if (Test-Path $manifestPath) {
+            Write-Host "✓ Found manifest file" -ForegroundColor Green
+          } else {
+            Write-Host "✗ Missing manifest file at: $manifestPath" -ForegroundColor Red
+            $allFilesExist = $false
+          }
+          
+          # Check for xcframework
+          $xcframeworkPath = "$iosResourcesPath/flic2lib.xcframework"
+          if (Test-Path $xcframeworkPath) {
+            Write-Host "✓ Found xcframework folder" -ForegroundColor Green
+          } else {
+            Write-Host "✗ Missing xcframework at: $xcframeworkPath" -ForegroundColor Red
+            $allFilesExist = $false
+          }
+        } else {
+          Write-Host "✗ Missing iOS resources folder: $iosResourcesPath" -ForegroundColor Red
+          Write-Host "  This folder should be created during the iOS build" -ForegroundColor Yellow
+          $allFilesExist = $false
+        }
+        
+        if (-not $allFilesExist) {
+          Write-Error "One or more required files are missing"
+          exit 1
         }
 
     - name: Create Platforms NuGet package
