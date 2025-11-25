@@ -1,47 +1,54 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0-android;net9.0-ios</TargetFrameworks>
+		<TargetFrameworks>net10.0-android;net10.0-ios</TargetFrameworks>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<DebugType>full</DebugType>
 
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
+		<SupportedOSPlatformVersion
+			Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
 			13.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+		<SupportedOSPlatformVersion
+			Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
 			29.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
-	</ItemGroup>	<!--
-	Android -->
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.0" />
+	</ItemGroup>
+
+	<!-- Android -->
 	<ItemGroup Condition="$(TargetFramework.Contains('android')) != true">
 		<Compile Remove="**\**\*.android.cs" />
-		<None Include="**\**\*.android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+		<None Include="**\**\*.android.cs"
+			Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 		<Compile Remove="**\Android\**\*.cs" />
-		<None Include="**\Android\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+		<None Include="**\Android\**\*.cs"
+			Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
 
 	<!-- iOS -->
 	<ItemGroup Condition="$(TargetFramework.Contains('ios')) != true">
 		<Compile Remove="**\**\*.ios.cs" />
-		<None Include="**\**\*.ios.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+		<None Include="**\**\*.ios.cs"
+			Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 		<Compile Remove="**\iOS\**\*.cs" />
-		<None Include="**\iOS\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+		<None Include="**\iOS\**\*.cs"
+			Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
-	  <ProjectReference Include="..\flic2lib.android\flic2lib.android.csproj" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
-		<ProjectReference Include="..\flic2lib.ios\flic2lib.ios.csproj" />
+	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0-android'">
+		<ProjectReference Include="..\flic2lib.android\flic2lib.android.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Platforms\" />
+		<Folder Include="Platforms\" />
 	</ItemGroup>
-	
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0-ios'">
+		<ProjectReference Include="..\flic2lib.ios\flic2lib.ios.csproj" />
+	</ItemGroup>
+
 </Project>

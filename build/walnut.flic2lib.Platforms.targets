@@ -2,12 +2,15 @@
 <Project>
     <!-- Ensure proper native framework references for iOS apps consuming this package -->
     <ItemGroup Condition="$(TargetFramework.Contains('-ios'))">
-        <!-- Include the xcframework resources that contain the native library -->
-        <Content
-            Include="$(MSBuildThisFileDirectory)../lib/net9.0-ios13.0/flic2lib.ios.resources/**/*">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-            <Link>flic2lib.ios.resources/%(RecursiveDir)%(Filename)%(Extension)</Link>
-        </Content>
+        <!-- Include the xcframework as a NativeReference instead of Content -->
+        <NativeReference
+            Include="$(MSBuildThisFileDirectory)../lib/net10.0-ios13.0/flic2lib.ios.resources/flic2lib.xcframework">
+            <Kind>Framework</Kind>
+            <ForceLoad>true</ForceLoad>
+            <Frameworks>Foundation CoreBluetooth</Frameworks>
+            <NeedsGccExceptionHandling>false</NeedsGccExceptionHandling>
+            <IsCxx>false</IsCxx>
+        </NativeReference>
     </ItemGroup>
 
     <!-- Framework flags are set in .props file to avoid duplication -->
