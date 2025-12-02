@@ -8,16 +8,14 @@
         <license type="expression">MIT</license>
         <projectUrl>https://github.com/walnut-co/flic2lib.maui</projectUrl>
         <description>Flic2lib platform bindings for net10 ios and android</description>
-        <releaseNotes>Version 1.0.21: XCFramework is now copied to the app output directory for
-            reliable consumption in downstream projects. Also includes all previous .NET 10 and iOS
-            15.0 compatibility improvements.</releaseNotes>
+        <releaseNotes>Version 1.0.21: Fixed NuGet package structure to use correct net10.0-ios TFM instead of net10.0-ios15.0. XCFramework now properly included in lib folder for .NET 10 consumption. Resolves errSecInternalComponent and framework discovery issues.</releaseNotes>
         <readme>docs/platforms_readme.md</readme>
         <copyright>$copyright$</copyright>
         <tags>flic flic2 buttons platform bindings</tags>
         <dependencies>
             <group targetFramework="net10.0-android29.0">
             </group>
-            <group targetFramework="net10.0-ios15.0">
+            <group targetFramework="net10.0-ios">
                 <dependency id="System.Runtime.InteropServices.NFloat.Internal" version="6.0.1"
                     exclude="Build,Analyzers" />
             </group>
@@ -48,14 +46,14 @@
 
         <!-- ios -->
         <file src="flic2lib.ios/bin/Release/net10.0-ios/flic2lib.ios.dll"
-            target="lib/net10.0-ios15.0/" />
+            target="lib/net10.0-ios/" />
         <file src="flic2lib.ios/bin/Release/net10.0-ios/flic2lib.ios.pdb"
-            target="lib/net10.0-ios15.0/" />
+            target="lib/net10.0-ios/" />
         <file src="flic2lib.ios/bin/Release/net10.0-ios/flic2lib.ios.xml"
-            target="lib/net10.0-ios15.0/" />
-        <!-- Include the resources.zip file - .NET will automatically extract it when package is
-        consumed -->
-        <file src="flic2lib.ios/bin/Release/net10.0-ios/flic2lib.ios.resources.zip"
-            target="lib/net10.0-ios15.0/" />
+            target="lib/net10.0-ios/" />
+        <!-- iOS XCFramework in lib folder for proper .NET 10 consumption -->
+        <file src="flic2lib.ios/lib/flic2lib.xcframework/**"
+            target="lib/net10.0-ios/flic2lib.xcframework/" />
+
     </files>
 </package>
