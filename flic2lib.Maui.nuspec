@@ -2,23 +2,23 @@
 <package>
   <metadata>
     <id>walnut.flic2lib.Maui</id>
-    <version>1.0.17</version>
+    <version>1.0.18</version>
     <authors>walnut</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <!-- <icon>icon.png</icon> -->
     <projectUrl>https://github.com/walnut-co/flic2lib.maui</projectUrl>
     <description>Flic2lib For usage in MAUI with comprehensive background event handling</description>
-    <releaseNotes>Version 1.0.17: Upgraded to .NET 10 with updated dependencies and MAUI Controls
+    <releaseNotes>Version 1.0.18: Upgraded to .NET 10 with updated dependencies and MAUI Controls
       10.0.0. Minimum iOS version updated to 15.0 for Xcode 26.1.1 compatibility.</releaseNotes>
     <copyright>Copyright 2025 Walnut</copyright>
     <tags>flic flic2 buttons platform bindings maui background emergency</tags>
     <dependencies>
       <group targetFramework="net10.0-android29.0">
-        <dependency id="walnut.flic2lib.Platforms" version="1.0.17" />
+        <dependency id="walnut.flic2lib.Platforms" version="1.0.18" />
       </group>
       <group targetFramework="net10.0-ios15.0">
-        <dependency id="walnut.flic2lib.Platforms" version="1.0.17" />
+        <dependency id="walnut.flic2lib.Platforms" version="1.0.18" />
       </group>
     </dependencies>
   </metadata>
