@@ -2,22 +2,24 @@
 <package>
   <metadata>
     <id>walnut.flic2lib.Maui</id>
-    <version>1.0.21</version>
+    <version>1.0.22</version>
     <authors>walnut</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <!-- <icon>icon.png</icon> -->
     <projectUrl>https://github.com/walnut-co/flic2lib.maui</projectUrl>
     <description>Flic2lib For usage in MAUI with comprehensive background event handling</description>
-    <releaseNotes>Version 1.0.21: Fixed NuGet package structure to use correct net10.0-ios TFM instead of net10.0-ios15.0. XCFramework now properly included in lib folder for .NET 10 consumption. Resolves errSecInternalComponent and framework discovery issues.</releaseNotes>
+    <releaseNotes>Version 1.0.22: Fixed NuGet package structure to use correct net10.0-ios TFM
+      instead of net10.0-ios15.0. XCFramework now properly included in lib folder for .NET 10
+      consumption. Resolves errSecInternalComponent and framework discovery issues.</releaseNotes>
     <copyright>Copyright 2025 Walnut</copyright>
     <tags>flic flic2 buttons platform bindings maui background emergency</tags>
     <dependencies>
       <group targetFramework="net10.0-android29.0">
-        <dependency id="walnut.flic2lib.Platforms" version="1.0.21" />
+        <dependency id="walnut.flic2lib.Platforms" version="1.0.22" />
       </group>
       <group targetFramework="net10.0-ios">
-        <dependency id="walnut.flic2lib.Platforms" version="1.0.21" />
+        <dependency id="walnut.flic2lib.Platforms" version="1.0.22" />
       </group>
     </dependencies>
   </metadata>
