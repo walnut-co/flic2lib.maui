@@ -2,14 +2,15 @@
 <package>
     <metadata>
         <id>walnut.flic2lib.Platforms</id>
-        <version>1.0.19</version>
+        <version>1.0.20</version>
         <authors>walnut</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <license type="expression">MIT</license>
         <projectUrl>https://github.com/walnut-co/flic2lib.maui</projectUrl>
         <description>Flic2lib platform bindings for net10 ios and android</description>
-        <releaseNotes>Version 1.0.19: Upgraded to .NET 10 with updated dependencies and MAUI
-            Controls 10.0.0. Minimum iOS version updated to 15.0 for Xcode 26.1.1 compatibility.</releaseNotes>
+        <releaseNotes>Version 1.0.20: Fixed XCFramework packaging with buildTransitive for reliable
+            path resolution. Upgraded to .NET 10 with MAUI Controls 10.0.0. Minimum iOS version 15.0
+            for Xcode 26.1.1 compatibility.</releaseNotes>
         <readme>docs/platforms_readme.md</readme>
         <copyright>$copyright$</copyright>
         <tags>flic flic2 buttons platform bindings</tags>
