@@ -11,6 +11,13 @@
             <NeedsGccExceptionHandling>false</NeedsGccExceptionHandling>
             <IsCxx>false</IsCxx>
         </NativeReference>
+        <!-- Copy the xcframework to the output directory for the app to find Info.plist and
+        binaries -->
+        <None
+            Include="$(MSBuildThisFileDirectory)../buildTransitive/xcframeworks/flic2lib.xcframework/**">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Pack>false</Pack>
+        </None>
     </ItemGroup>
 
     <!-- Framework flags are set in .props file to avoid duplication -->
